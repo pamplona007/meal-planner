@@ -1,0 +1,12 @@
+{
+  "type": "postgres",
+  "port": 5432,
+  "host": "localhost",
+  "username": "docker",
+  "password": "docker",
+  "database": "meal_planner",
+  "entities": ["./src/**/entities/*.entity.ts"],
+  "cli": {
+    "migrationsDir": "./dist/_shared/infra/typeorm/migrations"
+  }
+}

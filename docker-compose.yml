@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  database:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=meal_planner
+    ports:
+      - 5432:5432
+    networks:
+      - meal-planner
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    networks:
+      - meal-planner
+
+networks:
+  meal-planner:
+    external: true
+    name: meal-planner
