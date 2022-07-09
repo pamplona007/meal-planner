@@ -4,6 +4,7 @@ import { RecipesModule } from './recipes/recipes.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
+import { RecipePicturesModule } from './recipe_pictures/recipe_pictures.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { getConnectionOptions } from 'typeorm';
     }),
     UsersModule,
     RecipesModule,
-    IngredientsModule
+    IngredientsModule,
+    RecipePicturesModule,
   ],
 })
 

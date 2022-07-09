@@ -19,6 +19,20 @@ services:
     networks:
       - meal-planner
 
+  app:
+    build: .
+    ports:
+      - 3000:3000
+      - 9229:9229
+    volumes:
+      - .:/usr/app
+    links:
+      - database
+    depends_on:
+      - database
+    networks:
+      - meal-planner
+
 networks:
   meal-planner:
     external: true
