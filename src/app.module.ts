@@ -1,25 +1,22 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
-import { RecipesModule } from './recipes/recipes.module';
-import { IngredientsModule } from './ingredients/ingredients.module';
+import { UsersModule } from './modules/users/users.module';
+import { RecipesModule } from './modules/recipes/recipes.module';
+import { IngredientsModule } from './modules/ingredients/ingredients.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { getConnectionOptions } from 'typeorm';
-import { RecipePicturesModule } from './recipe_pictures/recipe_pictures.module';
+import { RecipePicturesModule } from './modules/recipe_pictures/recipe_pictures.module';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync({
-      useFactory: async () => {
-        const defaultOptions = await getConnectionOptions();
-
-        const connection = Object.assign(defaultOptions, {
-          database: process.env.NODE_ENV === "test"
-            ? defaultOptions.database + "_test"
-            : defaultOptions.database,
-        })
-
-        return connection;
-      }
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      port: 5432,
+      host: 'localhost',
+      username: 'docker',
+      password: 'docker',
+      database: 'meal_planner',
+      entities: ['./build/**/entities/*.entity.js'],
+      synchronize: true,
     }),
     UsersModule,
     RecipesModule,
@@ -28,4 +25,6 @@ import { RecipePicturesModule } from './recipe_pictures/recipe_pictures.module';
   ],
 })
 
-export class AppModule { }
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
